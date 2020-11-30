@@ -48,6 +48,8 @@ class _CameraState extends State<Camera> {
 
             int startTime = new DateTime.now().millisecondsSinceEpoch;
 
+
+
             Tflite.runPoseNetOnFrame(
               bytesList: img.planes.map((plane) {
                 return plane.bytes;

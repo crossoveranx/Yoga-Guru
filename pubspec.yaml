@@ -53,6 +53,7 @@ flutter:
     - assets/images/yoga1.png
     - assets/images/profile-image.png
     - assets/models/posenet_mv1_075_float_from_checkpoints.tflite
+    - assets/models/pose_39kp_full.tflite
     - assets/models/yoga_classifier.tflite
     - assets/poses/
   # An image asset can refer to one or more resolution-specific "variants", see

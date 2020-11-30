@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'dart:math';
 
 List<dynamic> _inputArr = [];
 String _label = 'Wrong Pose';
@@ -81,8 +82,23 @@ class BndBox extends StatelessWidget {
           );
         }).toList();
 
-        // print("Input Arr: " + _inputArr.toList().toString());
-        _getPrediction(_inputArr.cast<double>().toList());
+
+
+        // var list = re["keypoints"].values.map<Widget>((k) {
+        //   if (k["part"] == rightShoulder) {
+        //
+        //   }
+        //   // calculate pose angles for activity
+        //   double poseAngles = calculateAngleDeviation(
+        //       pose.getPoseLandmark(PoseLandmark.Type.RIGHT_SHOULDER),
+        //       pose.getPoseLandmark(PoseLandmark.Type.RIGHT_HIP),
+        //       pose.getPoseLandmark(PoseLandmark.Type.RIGHT_KNEE));
+        // })
+        // // print("Input Arr: " + _inputArr.toList().toString());
+        // _getPrediction(_inputArr.cast<double>().toList());
+
+
+
 
         _inputArr.clear();
         // print("Input Arr after clear: " + _inputArr.toList().toString());
@@ -135,6 +151,14 @@ class BndBox extends StatelessWidget {
         "model": customModel,
         "arg": poses,
       }); // passing arguments
+      print(poses);
+      print(result);
+
+
+
+
+
+
 
       _percent = result;
       _label =
@@ -145,6 +169,22 @@ class BndBox extends StatelessWidget {
     } on PlatformException catch (e) {
       return e.message;
     }
+  }
+
+  num calculateAngleDeviation(firstPoint, midPoint, lastPoint) {
+    double result = radsToDegrees(atan2(lastPoint.getPosition().y - midPoint.getPosition().y,
+        lastPoint.getPosition().x - midPoint.getPosition().x)
+        - atan2(firstPoint.getPosition().y - midPoint.getPosition().y,
+            firstPoint.getPosition().x - midPoint.getPosition().x));
+    result = result.abs(); // Angle should never be negative
+    if (result > 180) {
+      result = 360.0 - result; // Always get the acute representation of the angle
+    }
+    return result;
+  }
+
+  num radsToDegrees(num rad) {
+    return (rad * 180.0) / pi;
   }
 
   void updateCounter(perc) {

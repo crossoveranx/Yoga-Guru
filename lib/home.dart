@@ -8,6 +8,7 @@ import 'package:yoga_guru/size_route.dart';
 import 'package:yoga_guru/util/pose_data.dart';
 import 'package:yoga_guru/util/auth.dart';
 import 'package:yoga_guru/util/user.dart';
+import 'package:yoga_guru/video_picker.dart';
 
 class Home extends StatelessWidget {
   final String email;
@@ -196,6 +197,7 @@ class Home extends StatelessWidget {
   }
 }
 
+
 class CircleProfileImage extends StatefulWidget {
   final User user;
   const CircleProfileImage({this.user});
@@ -215,7 +217,7 @@ class _CircleProfileImageState extends State<CircleProfileImage> {
       child: Center(
         child: CircleAvatar(
           radius: 15,
-          backgroundImage: user.photoUrl.isEmpty
+          backgroundImage: user.photoUrl?.isEmpty ?? true
               ? AssetImage(
                   'assets/images/profile-image.png',
                 )
